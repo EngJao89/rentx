@@ -1,5 +1,7 @@
 import { RFValue } from 'react-native-responsive-fontsize';
 import { TouchableProps } from './../../../node_modules/react-native-svg/src/index.d';
+import { Car } from '../../components/Car';
+import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
@@ -29,3 +31,11 @@ export const TotalCars = styled.Text`
   font-family: ${({ theme }) => theme.fonts.primary_400};
   color: ${({ theme }) => theme.colors.text};
 `;
+
+export const CarList = styled(FlatList as new () => FlatList<Car>)
+.attrs({
+  contentContainerStyle: {
+    padding: 24
+  },
+  showsVerticalScrollIndicator: false
+})``;
