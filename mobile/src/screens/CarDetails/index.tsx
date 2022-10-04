@@ -1,6 +1,14 @@
 import React from 'react';
+import { Acessory } from '../../components/Acessory';
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
+
+import speedSvg from '../../assets/speed.svg';
+import accelerationSvg from '../../assets/acceleration.svg';
+import forceSvg from '../../assets/force.svg';
+import gasolineSvg from '../../assets/gasoline.svg';
+import exchangeSvg from '../../assets/exchange.svg';
+import peopleSvg from '../../assets/people.svg';
 
 import { 
   Container, 
@@ -14,7 +22,8 @@ import {
   Rent, 
   Period,
   Price, 
-  About
+  About, 
+  Accessories
 } from './styles';
 
 export function CarDetails() {
@@ -40,6 +49,15 @@ export function CarDetails() {
             <Price>R$ 580</Price>
           </Rent>
         </Details>
+
+        <Accessories>
+          <Acessory name="380Km/h" icon={speedSvg}/>
+          <Acessory name="3.2s" icon={accelerationSvg}/>
+          <Acessory name="800 HP" icon={forceSvg}/>
+          <Acessory name="Gasolina" icon={gasolineSvg}/>
+          <Acessory name="Automático" icon={exchangeSvg}/>
+          <Acessory name="2 Pessoas" icon={peopleSvg}/>
+        </Accessories>
 
         <About>
           Este é automóvel desportivo. Surgio do lendário touro de lide indultado
