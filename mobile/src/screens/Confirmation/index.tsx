@@ -12,9 +12,16 @@ import {
   Footer,
 } from './styles';
 import { ConfirmButton } from '../../components/ConfirmButton';
+import { useNavigation } from '@react-navigation/native';
 
 export function Confirmation() {
   const { width } = useWindowDimensions();
+
+  const navigation = useNavigation();
+
+  function handleConfirm() {
+    navigation.navigate('Home');
+  }
   return (
     <Container>
       <StatusBar 
@@ -37,7 +44,7 @@ export function Confirmation() {
       </Content>
 
       <Footer>
-        <ConfirmButton title="OK" />
+        <ConfirmButton title="OK" onPress={handleConfirm} />
       </Footer>
     </Container>
   );
