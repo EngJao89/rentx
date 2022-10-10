@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 import Logo from '../../assets/logo.svg';
 import  { api } from '../../services/api';
@@ -19,23 +19,14 @@ import {
   CarList
 } from './styles';
 
+
 export function Home() {
-  const [cars, setCars] = useState([]);
+  const [cars, setCars] = useState<CarDTO[]>([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation();
 
-  const carData = {
-    brand: 'Audi',
-    name: 'RS 5 Coupé',
-    rent: {
-      period: 'AO DIA',
-      price: 120,
-    },
-    thumbnail: 'https://i.pinimg.com/originals/32/8a/05/328a05f1c3142221aed4f9c20fe9fef0.png'
-  }
-
-  function handleCarDetails() {
-    navigation.navigate('CarDetails')    
+  function handleCarDetails(car: CarDTO) {
+    navigation.navigate('CarDetails', { car })    
   }
 
   useEffect(() => {
