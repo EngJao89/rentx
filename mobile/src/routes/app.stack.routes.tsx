@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Home } from '../screens/Home';
 import { CarDetails } from '../screens/CarDetails';
@@ -7,11 +7,14 @@ import { Scheduling } from '../screens/Scheduling';
 import { SchedulingDetails } from '../screens/SchedulingDetails';
 import { Confirmation } from '../screens/Confirmation';
 
-const { Navigator, Screen } = createStackNavigator();
+const { Navigator, Screen } = createNativeStackNavigator();
 
 export function AppStackRoutes(){
   return(
-    <Navigator headerMode="none" initialRouteName="Home">      
+    <Navigator 
+      screenOptions={{ headerShown: false }} 
+      initialRouteName="home"
+    >      
     <Screen 
       name="Home"
       component={Home}
