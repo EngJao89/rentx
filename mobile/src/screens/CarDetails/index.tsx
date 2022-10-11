@@ -1,16 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+
 import { Accessory } from '../../components/Accessory';
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
 import { Button } from '../../components/Button';
 
-import speedSvg from '../../assets/speed.svg';
-import accelerationSvg from '../../assets/acceleration.svg';
-import forceSvg from '../../assets/force.svg';
-import gasolineSvg from '../../assets/gasoline.svg';
-import exchangeSvg from '../../assets/exchange.svg';
-import peopleSvg from '../../assets/people.svg';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
 
 import { 
   Container, 
@@ -41,7 +37,7 @@ export function CarDetails() {
   const { car } = route.params as Params;
 
   function handleConfirmRental() {
-    navigation.navigate('Scheduling');
+    navigation.navigate('Scheduling', { car: carUpdate });
   }
 
   function handleBack(){
@@ -79,6 +75,7 @@ export function CarDetails() {
                 <Accessory 
                   key={accessory.type}
                   name={accessory.name}
+                  icon={getAccessoryIcon(accessory.type)}
                 />
               ))
             }
