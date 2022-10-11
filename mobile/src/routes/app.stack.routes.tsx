@@ -13,7 +13,7 @@ export function AppStackRoutes(){
   return(
     <Navigator 
       screenOptions={{ headerShown: false }} 
-      initialRouteName="home"
+      initialRouteName="Scheduling"
     >      
     <Screen 
       name="Home"
