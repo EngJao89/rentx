@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
+import { StatusBar, StyleSheet } from 'react-native';
+import { useTheme } from 'styled-components'; 
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
-import { Accessory } from '../../components/Accessory';
+import { api } from '../../services/api';
+
+import Animated, {
+  useSharedValue,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  interpolate,
+  Extrapolate
+} from 'react-native-reanimated';
+
 import { BackButton } from '../../components/BackButton';
 import { ImageSlider } from '../../components/ImageSlider';
+import { Accessory } from '../../components/Accessory';
 import { Button } from '../../components/Button';
 
 import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
+import { CarDTO } from '../../dtos/CarDTO';
 
 import { 
   Container, 
@@ -24,7 +38,6 @@ import {
   Accessories, 
   Footer
 } from './styles';
-import { CarDTO } from '../../dtos/CarDTO';
 
 interface Params {
   car: CarDTO
@@ -32,6 +45,7 @@ interface Params {
 
 export function CarDetails() {
   const [carUpdate, setCarUpdate] = useState<CarDTO>({} as CarDTO);
+
   const navigation = useNavigation();
   const route = useRoute();
   const { car } = route.params as Params;
