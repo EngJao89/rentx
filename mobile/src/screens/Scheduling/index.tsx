@@ -1,25 +1,11 @@
-import React, {useState, useEffect} from 'react';
-import { BackButton } from '../../components/BackButton';
-import theme from '../../styles/theme';
+import React, { useState } from 'react';
+import { useNavigation, useRoute } from '@react-navigation/native';
+import { format } from 'date-fns';
 
-import { getPlatformDate } from '../../utils/getPlatformDate';
-import { CarDTO } from '../../dtos/CarDTO';
-
-import ArrowSvg from '../../assets/arrow.svg';
-
-import { 
-  Container, 
-  Header, 
-  Title, 
-  RentalPeriod, 
-  DateInfo, 
-  DateTitle, 
-  DateValue, 
-  Footer, 
-  Content,
-
-} from './styles';
 import { StatusBar } from 'react-native';
+import { useTheme } from 'styled-components';
+
+import { BackButton } from '../../components/BackButton';
 import { Button } from '../../components/Button';
 import { 
   Calendar, 
@@ -27,8 +13,22 @@ import {
   generateInterval,
   MarkedDateProps
 } from '../../components/Calendar';
-import { useNavigation } from '@react-navigation/native';
-import { format } from 'date-fns';
+
+import ArrowSvg from '../../assets/arrow.svg';
+import { getPlatformDate } from '../../utils/getPlatformDate';
+import { CarDTO } from '../../dtos/CarDTO';
+
+import {
+  Container,
+  Header,
+  Title,
+  RentalPeriod,
+  DateInfo,
+  DateTitle,
+  DateValue,
+  Content,
+  Footer
+} from './styles';
 
 interface RentalPeriod {
   startFormatted: string;
@@ -44,10 +44,16 @@ export function Scheduling() {
   const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>({} as DayProps);
   const [markedDates, setMarkedDates] = useState<MarkedDateProps>({} as MarkedDateProps);
   const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod);
+  
   const navigation = useNavigation();
+  const route = useRoute();
+  const { car } = route.params as Params;
 
   function handleConfirmRental() {
-    navigation.navigate('SchedulingDetails');
+    navigation.navigate('SchedulingDetails', {
+      car,
+      dates: Object.keys(markedDates)
+    });
   }
 
   function handleBack(){
@@ -98,8 +104,8 @@ export function Scheduling() {
         <RentalPeriod>
           <DateInfo>
             <DateTitle>DE</DateTitle>
-              <DateValue selected={false}>
-                18/06/2022
+              <DateValue selected={!!rentalPeriod.startFormatted}>
+                {rentalPeriod.startFormatted}
               </DateValue>
           </DateInfo>
         </RentalPeriod>
@@ -109,8 +115,8 @@ export function Scheduling() {
         <RentalPeriod>
           <DateInfo>
             <DateTitle>DE</DateTitle>
-              <DateValue selected={false}>
-                22/06/2022
+              <DateValue selected={!!rentalPeriod.endFormatted}>
+                {rentalPeriod.endFormatted}
               </DateValue>
           </DateInfo>
         </RentalPeriod>
