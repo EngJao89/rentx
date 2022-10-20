@@ -107,6 +107,15 @@ export function CarDetails() {
         </Animated.View>
       </Animated.View>
 
+      <Animated.ScrollView
+        contentContainerStyle={{
+          paddingHorizontal: 24,
+          paddingTop: getStatusBarHeight() + 160,
+        }}
+        showsVerticalScrollIndicator={false}
+        onScroll={scrollHandler}
+        scrollEventThrottle={16}
+      >
         <Content>
           <Details>
             <Description>
@@ -141,13 +150,13 @@ export function CarDetails() {
             de acelerar.
           </About>
         </Content>
-
-        <Footer>
+      </Animated.ScrollView>
+      <Footer>
         <Button 
-            title="Escolher período do aluguel" 
-            onPress={handleConfirmRental}
-          />
-        </Footer>
+          title="Escolher período do aluguel" 
+          onPress={handleConfirmRental}
+        />
+      </Footer>
     </Container>
   );
 }
