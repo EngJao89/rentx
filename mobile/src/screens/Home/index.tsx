@@ -10,6 +10,7 @@ import { CarDTO } from '../../dtos/CarDTO';
 import { Car } from '../../components/Car';
 import { Price } from '../../components/Car/styles';
 import { Load } from '../../components/Load';
+import { LoadAnimation } from '../../components/LoadAnimation';
 
 import { 
   Container, 
@@ -67,7 +68,7 @@ export function Home() {
         </HeaderContent>
       </Header>
 
-      { loading ? <Load /> : 
+      { loading ? <LoadAnimation /> : 
         <CarList 
           data={cars}
           keyExtractor={item => item.id}
