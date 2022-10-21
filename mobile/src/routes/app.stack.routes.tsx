@@ -19,6 +19,9 @@ export function AppStackRoutes(){
       <Screen 
         name="Home"
         component={Home}
+        options={{
+          gestureEnabled: false,
+        }}
       />    
       <Screen 
         name="CarDetails"
