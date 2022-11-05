@@ -3,6 +3,7 @@ import { StatusBar, StyleSheet } from 'react-native';
 import { useTheme } from 'styled-components'; 
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 import { api } from '../../services/api';
 
@@ -21,31 +22,33 @@ import { Button } from '../../components/Button';
 
 import { getAccessoryIcon } from '../../utils/getAccessoryIcon';
 import { CarDTO } from '../../dtos/CarDTO';
+import { Car as CarModel} from '../../database/model/Car';
 
-import { 
-  Container, 
-  Header, 
-  CarImages, 
-  Content, 
-  Details, 
-  Description, 
-  Brand, 
-  Name, 
-  Rent, 
+import {
+  Container,
+  Header,
+  CarImages,
+  Details,
+  Description,
+  Brand,
+  Name,
+  Rent,
   Period,
-  Price, 
-  About, 
-  Accessories, 
-  Footer
+  Price,
+  About,
+  Accessories,
+  Footer,
+  OfflineInfo
 } from './styles';
 
 interface Params {
-  car: CarDTO
+  car: CarModel;
 }
 
-export function CarDetails() {
+export function CarDetails(){
   const [carUpdate, setCarUpdate] = useState<CarDTO>({} as CarDTO);
 
+  const netInfo = useNetInfo();
   const navigation = useNavigation();
   const route = useRoute();
   const { car } = route.params as Params;
@@ -87,8 +90,25 @@ export function CarDetails() {
     navigation.goBack();    
   }
 
+  useEffect(() => {
+    async function fetchOnlineData() {
+      const response = await api.get(`cars/${car.id}`);
+      setCarUpdate(response.data);
+    }
+
+    if(netInfo.isConnected === true){
+      fetchOnlineData();
+    }
+  },[netInfo.isConnected])
+
   return (
     <Container>
+      <StatusBar 
+        barStyle="dark-content"
+        translucent
+        backgroundColor="transparent"      
+      />
+
       <Animated.View
         style={[
           headerStyleAnimation, 
@@ -97,12 +117,17 @@ export function CarDetails() {
         ]}
       >
         <Header>
-          <BackButton onPress={handleBack} />
+          <BackButton onPress={handleBack}  />
         </Header>
 
         <Animated.View style={sliderCarsStyleAnimation}>
           <CarImages>
-            <ImageSlider imagesUrl={['https://i.pinimg.com/originals/32/8a/05/328a05f1c3142221aed4f9c20fe9fef0.png']} />
+            <ImageSlider 
+              imagesUrl={
+                !!carUpdate.photos ? 
+                carUpdate.photos : [{ id: car.thumbnail, photo: car.thumbnail }]
+              } 
+            />
           </CarImages>
         </Animated.View>
       </Animated.View>
@@ -116,46 +141,52 @@ export function CarDetails() {
         onScroll={scrollHandler}
         scrollEventThrottle={16}
       >
-        <Content>
-          <Details>
-            <Description>
-              <Brand>{car.brand}</Brand>
-              <Name>{car.name}</Name>
-            </Description>
+        <Details>
+          <Description>
+            <Brand>{car.brand}</Brand>
+            <Name>{car.name}</Name>
+          </Description>
 
-            <Rent>
-              <Period>{car.period}</Period>
-              <Price>{car.price}</Price>
-            </Rent>
-          </Details>
+          <Rent>
+            <Period>{car.period}</Period>
+            <Price>R$ {netInfo.isConnected === true ? car.price : '...'}</Price>
+          </Rent>
+        </Details>
 
-          {
-            carUpdate.accessories &&
-            <Accessories>
-              {
-                carUpdate.accessories.map(accessory => (
-                  <Accessory 
-                    key={accessory.type}
-                    name={accessory.name}
-                    icon={getAccessoryIcon(accessory.type)}
-                  />
-                ))
-              }
-            </Accessories>
-          }
+        {
+          carUpdate.accessories &&
+          <Accessories>
+            {
+              carUpdate.accessories.map(accessory => (
+                <Accessory 
+                  key={accessory.type}
+                  name={accessory.name}
+                  icon={getAccessoryIcon(accessory.type)}
+                />
+              ))
+            }
+          </Accessories>
+        }
 
-          <About>
-            Este é automóvel desportivo. Surgio do lendário touro de lide indultado
-            na praça Real Maestranza de Sevilla. É um belíssimo carro para quem gosta 
-            de acelerar.
-          </About>
-        </Content>
+        <About>
+          {car.about}
+        </About>
+
       </Animated.ScrollView>
+
       <Footer>
         <Button 
           title="Escolher período do aluguel" 
           onPress={handleConfirmRental}
+          enabled={netInfo.isConnected === true}
         />
+
+        {
+          netInfo.isConnected === false &&
+          <OfflineInfo>
+          Conecte-se a internet para ver mais detalhes e agendar seu carro.
+          </OfflineInfo>
+        }
       </Footer>
     </Container>
   );
