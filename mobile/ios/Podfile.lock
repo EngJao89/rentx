@@ -40,6 +40,10 @@ PODS:
   - libwebp/mux (1.2.3):
     - libwebp/demux
   - libwebp/webp (1.2.3)
+  - lottie-ios (3.2.3)
+  - lottie-react-native (5.1.3):
+    - lottie-ios (~> 3.2.3)
+    - React-Core
   - RCT-Folly (2021.06.28.00-v2):
     - boost
     - DoubleConversion
@@ -327,6 +331,33 @@ PODS:
     - SDWebImageWebPCoder (~> 0.8.4)
   - RNGestureHandler (2.5.0):
     - React-Core
+  - RNReanimated (2.9.1):
+    - DoubleConversion
+    - FBLazyVector
+    - FBReactNativeSpec
+    - glog
+    - RCT-Folly
+    - RCTRequired
+    - RCTTypeSafety
+    - React-callinvoker
+    - React-Core
+    - React-Core/DevSupport
+    - React-Core/RCTWebSocket
+    - React-CoreModules
+    - React-cxxreact
+    - React-jsi
+    - React-jsiexecutor
+    - React-jsinspector
+    - React-RCTActionSheet
+    - React-RCTAnimation
+    - React-RCTBlob
+    - React-RCTImage
+    - React-RCTLinking
+    - React-RCTNetwork
+    - React-RCTSettings
+    - React-RCTText
+    - ReactCommon/turbomodule/core
+    - Yoga
   - RNScreens (3.18.0):
     - React-Core
     - React-RCTImage
@@ -338,6 +369,9 @@ PODS:
   - SDWebImageWebPCoder (0.8.5):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.10)
+  - WatermelonDB (0.24.0):
+    - React
+    - React-jsi
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -355,6 +389,7 @@ DEPENDENCIES:
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
+  - lottie-react-native (from `../node_modules/lottie-react-native`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTRequired (from `../node_modules/react-native/Libraries/RCTRequired`)
   - RCTTypeSafety (from `../node_modules/react-native/Libraries/TypeSafety`)
@@ -385,14 +420,17 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - "WatermelonDB (from `../node_modules/@nozbe/watermelondb`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
     - fmt
     - libwebp
+    - lottie-ios
     - SDWebImage
     - SDWebImageWebPCoder
 
@@ -425,6 +463,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/React/FBReactNativeSpec"
   glog:
     :podspec: "../node_modules/react-native/third-party-podspecs/glog.podspec"
+  lottie-react-native:
+    :path: "../node_modules/lottie-react-native"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTRequired:
@@ -483,10 +523,14 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fast-image"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNReanimated:
+    :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  WatermelonDB:
+    :path: "../node_modules/@nozbe/watermelondb"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -507,6 +551,8 @@ SPEC CHECKSUMS:
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 3d02b25ca00c2d456734d0bcff864cbc62f6ae1a
   libwebp: 60305b2e989864154bd9be3d772730f08fc6a59c
+  lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
+  lottie-react-native: a501112fa980529ccb80b9f3ee117a7f98c6af3a
   RCT-Folly: b9d9fe1fc70114b751c076104e52f3b1b5e5a95a
   RCTRequired: c8c080849a3670601d5c7056023a2176067a69d8
   RCTTypeSafety: 710aef40f5ae246bc5fff7e873855b17ed11c180
@@ -536,12 +582,14 @@ SPEC CHECKSUMS:
   ReactCommon: fe7580b9d10f00249facf25659e0ec051320cc8a
   RNFastImage: 3207b9eb17c2425d574ca40db35185db6e324f4e
   RNGestureHandler: bad495418bcbd3ab47017a38d93d290ebd406f50
+  RNReanimated: 2cf7451318bb9cc430abeec8d67693f9cf4e039c
   RNScreens: f3230dd008a7d0ce5c0a8bc78ff12cf2315bda24
   RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: 908b83b6adda48effe7667cd2b7f78c897e5111d
+  WatermelonDB: e043b1a32ddc63864eb539b562e86ef80f8224cd
   Yoga: 75bf4b0131cfb46a659cd0c13309b79a6fcff66d
 
-PODFILE CHECKSUM: 8259029068dc42b6475f43e0d727e8322b3d530a
+PODFILE CHECKSUM: 231de77ccc3348ac12efc06443176ce2cbef466e
 
 COCOAPODS: 1.11.3
