@@ -16,7 +16,7 @@ import {
 
 import ArrowSvg from '../../assets/arrow.svg';
 import { getPlatformDate } from '../../utils/getPlatformDate';
-import { CarDTO } from '../../dtos/CarDTO';
+import { CarDTO } from '../../database/model/Car';
 
 import {
   Container,
@@ -39,12 +39,11 @@ interface Params {
   car: CarDTO;
 }
 
-
-export function Scheduling() {
+export function Scheduling(){
   const [lastSelectedDate, setLastSelectedDate] = useState<DayProps>({} as DayProps);
   const [markedDates, setMarkedDates] = useState<MarkedDateProps>({} as MarkedDateProps);
   const [rentalPeriod, setRentalPeriod] = useState<RentalPeriod>({} as RentalPeriod);
-  
+
   const theme = useTheme();
   const navigation = useNavigation();
   const route = useRoute();
@@ -85,12 +84,12 @@ export function Scheduling() {
 
   return (
     <Container>
-      <StatusBar
-        barStyle="light-content"
-        backgroundColor="transparent"
-        translucent
-      />
       <Header>
+        <StatusBar
+          barStyle="light-content"
+          translucent
+          backgroundColor="transparent"
+        />
         <BackButton 
           onPress={handleBack} 
           color={theme.colors.shape}
@@ -105,20 +104,18 @@ export function Scheduling() {
         <RentalPeriod>
           <DateInfo>
             <DateTitle>DE</DateTitle>
-              <DateValue selected={!!rentalPeriod.startFormatted}>
-                {rentalPeriod.startFormatted}
-              </DateValue>
+            <DateValue selected={!!rentalPeriod.startFormatted}>
+              {rentalPeriod.startFormatted}
+            </DateValue>
           </DateInfo>
-        </RentalPeriod>
 
-        <ArrowSvg/>
+          <ArrowSvg />
 
-        <RentalPeriod>
           <DateInfo>
-            <DateTitle>DE</DateTitle>
-              <DateValue selected={!!rentalPeriod.endFormatted}>
-                {rentalPeriod.endFormatted}
-              </DateValue>
+            <DateTitle>ATÉ</DateTitle>
+            <DateValue selected={!!rentalPeriod.endFormatted}>
+            {rentalPeriod.endFormatted}
+            </DateValue>
           </DateInfo>
         </RentalPeriod>
       </Header>
@@ -137,6 +134,7 @@ export function Scheduling() {
           enabled={!!rentalPeriod.startFormatted}
         />
       </Footer>
+
     </Container>
   );
 }

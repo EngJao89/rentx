@@ -13,7 +13,7 @@ export const Container = styled.View`
 
 export const Header = styled.View`
   width: 100%;
-  height: 350px;
+  height: 325px;
 
   background-color: ${({ theme }) => theme.colors.header};
 
@@ -36,8 +36,8 @@ export const RentalPeriod = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  position: relative;
 
+  margin: 32px 0;
 `;
 
 export const DateInfo = styled.View`
@@ -56,7 +56,7 @@ export const DateValue = styled.Text<DateValueProps>`
   font-size: ${RFValue(15)}px;
 
   ${({ selected, theme }) => !selected && css`
-    border-bottom-width: 2  spx;
+    border-bottom-width: 1px;
     border-bottom-color: ${theme.colors.text};
     padding-bottom: 5px;
   `};
