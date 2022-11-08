@@ -12,6 +12,7 @@ export const Header = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
   margin-top: ${getStatusBarHeight() + 31}px;
 `;
 
@@ -24,6 +25,7 @@ export const Title = styled.Text`
   font-size: ${RFValue(40)}px;
   font-family: ${({ theme }) => theme.fonts.secondary_600};
   color: ${({ theme }) => theme.colors.title};
+
   margin-top: 60px;
   margin-bottom: 16px;
 `;
@@ -45,5 +47,6 @@ export const FormTitle = styled.Text`
   font-size: ${RFValue(20)}px;
   font-family: ${({ theme }) => theme.fonts.secondary_600};
   color: ${({ theme }) => theme.colors.title};
+
   margin-bottom: 24px;
 `;
