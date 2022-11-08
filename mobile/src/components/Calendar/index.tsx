@@ -8,7 +8,7 @@ import { ptBR } from './localeConfig';
 import { 
   Calendar as CustomCalendar,
   LocaleConfig,
-  CalendarProps 
+  DateCallbackHandler,  
 } from 'react-native-calendars';
 
 LocaleConfig.locales['pt-br'] = ptBR;
@@ -29,6 +29,11 @@ interface DayProps {
   month: number;
   year: number;  
   timestamp: number;
+}
+
+interface CalendarProps {
+  markedDates: MarkedDateProps;
+  onDayPress: DateCallbackHandler;
 }
 
 function Calendar({ markedDates, onDayPress }: CalendarProps){
