@@ -1,7 +1,7 @@
 import React from 'react'
 import AppLoading from 'expo-app-loading'
 import { ThemeProvider } from 'styled-components'
-import { AppProvider } from './src/Hooks/Auth'
+import { AppProvider } from './src/hooks/Auth/auth'
 import { Routes } from './src/routes'
 import { fonts, useFonts } from './fonts'
 

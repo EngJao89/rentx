@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { useAuth } from '../hooks/auth';
+import { useAuth } from '../hooks/Auth/auth';
 
 import { AppTabRoutes } from './app.tab.routes';
 import { AuthRoutes } from './auth.routes';
