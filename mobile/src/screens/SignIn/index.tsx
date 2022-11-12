@@ -10,7 +10,7 @@ import {
 import * as Yup from 'yup';
 
 import theme from '../../styles/theme';
-import { useAuth } from '../../hooks/auth';
+import { useAuth } from '../../hooks/Auth/auth';
 
 import { Button } from '../../components/Button';
 import { Input } from '../../components/Input';

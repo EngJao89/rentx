@@ -11,7 +11,7 @@ import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import * as Yup from 'yup';
 import { useNetInfo } from '@react-native-community/netinfo';
 
-import { useAuth } from '../../hooks/auth';
+import { useAuth } from '../../hooks/Auth/auth';
 import { useTheme } from 'styled-components';
 import { Feather } from '@expo/vector-icons';
 
