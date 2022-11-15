@@ -1,123 +1,98 @@
-import React, { useState } from 'react';
-import { 
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Alert
-} from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { useTheme } from 'styled-components';
-import { api } from '../../../services/api';
+import React, { useState } from 'react'
+import { KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
 
-import { BackButton } from '../../../components/BackButton';
-import { Bullet } from '../../../components/Bullet';
-import { PasswordInput } from '../../../components/PasswordInput';
-import { Button } from '../../../components/Button';
+import { useHooks } from '../../../Hooks/useHooks'
+import { api } from '../../../services/api'
+import { UserDTO } from '../../../dtos/userDTO'
 
-import {
-  Container,
-  Header,
-  Steps,
-  Title,
-  Subtitle,
-  Form,
-  FormTitle
-} from './styles';
+import { BackButton } from '../../../components/BackButton'
+import { Bullet } from '../../../components/Bullet'
+import { Button } from '../../../components/Button'
+import { PasswordInput } from '../../../components/PasswordInput'
+import { Spacer } from '../../../components/Spacer'
 
-interface Params {
-  user: {
-    name: string;
-    email: string;
-    driverLicense: string;
-  }
-}
+import * as S from '../SignUpSecondStep/styles'
 
+export function SignUpSecondStep() {
+  const [password, setPassword] = useState('')
+  const [passwordConfirm, setPasswordConfirm] = useState('')
+  const { theme, navigation, route } = useHooks()
 
-export function SignUpSecondStep(){
-  const [password, setPassword] = useState('');
-  const [passwordConfirm, setPasswordConfirm] = useState('');
-
-  const navigation = useNavigation();
-  const route = useRoute();
-  const theme = useTheme();
-
-  const { user } = route.params as Params;
+  const { user } = route.params as UserDTO
 
   function handleBack() {
-    navigation.goBack();    
+    navigation.goBack()
   }
 
   async function handleRegister() {
-    if(!password || !passwordConfirm){
-      return Alert.alert('Informe a senha e a confirmação');
+    if (!password || !passwordConfirm) {
+      return Alert.alert('Inform a senha e a confirmação')
     }
 
-    if(password != passwordConfirm){
-      return Alert.alert('As senhas não são iguais');
+    if (password != passwordConfirm) {
+      return Alert.alert('As senhas não são iguais')
     }
 
+    try {
+      const data = {
+        name: user.name,
+        email: user.email,
+        driver_license: user.driverLicense,
+        password
+      }
 
-    await api.post('/users', {
-      name: user.name,
-      email: user.email,
-      driver_license: user.driverLicense,
-      password
-    })
-    .then(() => {
+      await api.post('/users', { ...data })
+
       navigation.navigate('Confirmation', {
         nextScreenRoute: 'SignIn',
-        title: 'Conta Criada!',
-        message: `Agora é só fazer login\ne aproveitar.`
-      });
-    })
-    .catch(() => {      
-      Alert.alert('Opa', 'Não foi possível cadastrar');
-    });
+        title: 'Conta criada!',
+        message: `Agora é só fazer login \ne aproveitar.`
+      })
+    } catch (error) {
+      Alert.alert('Opa', 'Não foi possível cadastar')
+    }
   }
 
   return (
     <KeyboardAvoidingView behavior="position" enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Container>
-          <Header>
+        <S.Container>
+          <S.Header>
             <BackButton onPress={handleBack} />
-            <Steps>
+            <S.Steps>
+              <Bullet active={false} />
               <Bullet active />
-              <Bullet />
-            </Steps>
-          </Header>
+            </S.Steps>
+          </S.Header>
 
-          <Title>
-            Crie sua{'\n'}conta
-          </Title>
-          <Subtitle>
+          <S.Title>Crie sua{'\n'}conta</S.Title>
+
+          <S.SubTitle>
             Faça seu cadastro de{'\n'}
             forma rápida e fácil
-          </Subtitle>
+          </S.SubTitle>
 
-          <Form>
-            <FormTitle>2. Senha</FormTitle>
-            <PasswordInput 
+          <S.Form>
+            <S.FormTitle>2. Senha</S.FormTitle>
+
+            <PasswordInput
               iconName="lock"
               placeholder="Senha"
               onChangeText={setPassword}
               value={password}
             />
-            <PasswordInput 
+            <Spacer />
+            <PasswordInput
               iconName="lock"
               placeholder="Repetir Senha"
               onChangeText={setPasswordConfirm}
               value={passwordConfirm}
             />
-          </Form>
+          </S.Form>
 
-          <Button 
-            color={theme.colors.success}
-            title="Cadastrar"     
-            onPress={handleRegister}   
-          />
-        </Container>
+          <Button title="Cadastrar" color={theme.colors.success} onPress={handleRegister} />
+        </S.Container>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-  );
+  )
 }
