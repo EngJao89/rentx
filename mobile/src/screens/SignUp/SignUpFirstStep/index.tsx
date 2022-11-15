@@ -1,58 +1,42 @@
-import React, { useState } from 'react';
-import { 
-  KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Alert
-} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import * as Yup from 'yup';
+import React, { useState } from 'react'
+import { KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native'
 
-import { BackButton } from '../../../components/BackButton';
-import { Bullet } from '../../../components/Bullet';
-import { Input } from '../../../components/Input';
-import { Button } from '../../../components/Button';
+import { BackButton } from '../../../components/BackButton'
+import { Bullet } from '../../../components/Bullet'
+import { Button } from '../../../components/Button'
+import { Input } from '../../../components/Input'
+import { Spacer } from '../../../components/Spacer'
 
-import {
-  Container,
-  Header,
-  Steps,
-  Title,
-  Subtitle,
-  Form,
-  FormTitle
-} from './styles';
+import { useHooks } from '../../../Hooks/useHooks'
 
-export function SignUpFirstStep(){
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [driverLicense, setDriverLicense] = useState('');
+import * as Yup from 'yup'
+import * as S from '../SignUpFirstStep/styles'
 
-  const navigation = useNavigation();
+export function SignUpFirstStep() {
+  const [email, setEmail] = useState('')
+  const [name, setName] = useState('')
+  const [driverLicense, setDriveLicense] = useState('')
+  const { navigation } = useHooks()
 
   function handleBack() {
-    navigation.goBack();    
+    navigation.goBack()
   }
 
   async function handleNextStep() {
     try {
       const schema = Yup.object().shape({
-        driverLicense: Yup.string()
-        .required('CNH é obrigatória'),
-        email: Yup.string()
-        .email('E-mail inválido')
-        .required('E-mail é obrigatório'),
-        name: Yup.string()
-        .required('Nome é obrigatório')
-      });
+        driverLicense: Yup.string().required('CNH é obrigatória'),
+        email: Yup.string().email('E-mail inválido').required('E-mail é obrigatório'),
+        name: Yup.string().required('Nome é obrigatório')
+      })
 
-      const data = { name, email, driverLicense };
-      await schema.validate(data);
-      
-      navigation.navigate('SignUpSecondStep', { user: data });
+      const data = { name, email, driverLicense }
+      await schema.validate(data)
+
+      navigation.navigate('SignUpSecondStep', { user: data })
     } catch (error) {
-      if(error instanceof Yup.ValidationError){
-        return Alert.alert('Opa', error.message);
+      if (error instanceof Yup.ValidationError) {
+        return Alert.alert('Opa', error.message)
       }
     }
   }
@@ -60,54 +44,49 @@ export function SignUpFirstStep(){
   return (
     <KeyboardAvoidingView behavior="position" enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <Container>
-          <Header>
+        <S.Container>
+          <S.Header>
             <BackButton onPress={handleBack} />
-            <Steps>
+            <S.Steps>
+              <Bullet active={false} />
               <Bullet active />
-              <Bullet />
-            </Steps>
-          </Header>
+            </S.Steps>
+          </S.Header>
 
-          <Title>
-            Crie sua{'\n'}conta
-          </Title>
-          <Subtitle>
+          <S.Title>Crie sua{'\n'}conta</S.Title>
+
+          <S.SubTitle>
             Faça seu cadastro de{'\n'}
             forma rápida e fácil
-          </Subtitle>
+          </S.SubTitle>
 
-          <Form>
-            <FormTitle>1. Dados</FormTitle>
-            <Input 
-              iconName="user"
-              placeholder="Nome"
-              onChangeText={setName}
-              value={name}
-            />
-            <Input 
+          <S.Form>
+            <S.FormTitle>1. Dados</S.FormTitle>
+
+            <Input iconName="user" placeholder="Nome" onChangeText={setName} value={name} />
+            <Spacer />
+            <Input
               iconName="mail"
               placeholder="E-mail"
               keyboardType="email-address"
+              autoCorrect={false}
+              autoCapitalize="none"
               onChangeText={setEmail}
               value={email}
             />
-            <Input 
+            <Spacer />
+            <Input
               iconName="credit-card"
               placeholder="CNH"
               keyboardType="numeric"
-              onChangeText={setDriverLicense}
+              onChangeText={setDriveLicense}
               value={driverLicense}
             />
-          </Form>
+          </S.Form>
 
-          <Button 
-            title="Próximo"      
-            onPress={handleNextStep}  
-          />
-
-        </Container>
+          <Button title="Próximo" onPress={handleNextStep} />
+        </S.Container>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-  );
+  )
 }
