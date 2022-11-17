@@ -1,4 +1,4 @@
-import { tableSchema } from '@nozbe/watermelondb';
+import { tableSchema } from '@nozbe/watermelondb'
 
 const carSchema = tableSchema({
   name: 'cars',
@@ -32,6 +32,5 @@ const carSchema = tableSchema({
       type: 'string'
     }
   ]
-});
-
+})
 export { carSchema }
