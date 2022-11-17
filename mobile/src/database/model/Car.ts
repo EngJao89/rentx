@@ -1,29 +1,28 @@
-import { Model } from '@nozbe/watermelondb';
-import { field } from '@nozbe/watermelondb/decorators';
+import { Model } from '@nozbe/watermelondb'
+import { field } from '@nozbe/watermelondb/decorators'
 
 class Car extends Model {
   static table = 'cars'
 
   @field('name')
-  name!: string;
+  name!: string
 
   @field('brand')
-  brand!: string;
+  brand!: string
 
   @field('about')
-  about!: string;
+  about!: string
 
   @field('fuel_type')
-  fuel_type!: string;
+  fuel_type!: string
 
   @field('period')
-  period!: string;
+  period!: string
 
   @field('price')
-  price!: number;
+  price!: number
 
   @field('thumbnail')
-  thumbnail!: string;
+  thumbnail!: string
 }
-
 export { Car }
