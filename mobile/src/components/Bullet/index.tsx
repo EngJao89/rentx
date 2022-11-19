@@ -1,15 +1,10 @@
-import React from 'react';
+import React from 'react'
+import * as S from './styles'
 
-import {
-  Container
-} from './styles';
-
-interface Props {
-  active?: boolean;
+type Props = {
+  active: boolean
 }
 
-export function Bullet({ active = false }: Props){
-  return (
-    <Container active={active} />
-  );
+export function Bullet({ active }: Props) {
+  return <S.Container active={active} />
 }
