@@ -1,22 +1,13 @@
-import React from 'react';
-import LottieView from 'lottie-react-native';
+import React from 'react'
+import LottieView from 'lottie-react-native'
+import loadingCar from '../../assets/loadingCar.json'
 
-import loadingCar from '../../assets/loadingCar.json';
+import * as S from './styles'
 
-import {
-  Container
-} from './styles';
-
-export function LoadAnimation(){
+export function LoadAnimation() {
   return (
-    <Container>
-      <LottieView
-        source={loadingCar}
-        style={{ height: 200 }}
-        resizeMode="contain"
-        autoPlay
-        loop
-      />
-    </Container>
-  );
+    <S.Container>
+      <LottieView source={loadingCar} style={{ height: 200 }} resizeMode="contain" autoPlay loop />
+    </S.Container>
+  )
 }
