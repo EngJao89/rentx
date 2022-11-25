@@ -1,4 +1,4 @@
-package com.mobile;
+package com.rentx;
 
 import android.app.Application;
 import android.content.Context;
@@ -7,15 +7,18 @@ import androidx.annotation.NonNull;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.netinfo.NetInfoPackage;
+import com.reactnativecommunity.netinfo.NetInfoPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
-import com.facebook.react.config.ReactFeatureFlags;
 import com.facebook.soloader.SoLoader;
-import com.mobile.newarchitecture.MainApplicationReactNativeHost;
 
 import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
+
+import com.facebook.react.bridge.JSIModulePackage;
+import com.swmansion.reanimated.ReanimatedJSIModulePackage;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -42,25 +45,21 @@ public class MainApplication extends Application implements ReactApplication {
     protected String getJSMainModuleName() {
       return "index";
     }
-  });
 
-  private final ReactNativeHost mNewArchitectureNativeHost =
-      new ReactNativeHostWrapper(this, new MainApplicationReactNativeHost(this));
+    @Override
+    protected JSIModulePackage getJSIModulePackage() {
+      return new ReanimatedJSIModulePackage();
+    }
+  });
 
   @Override
   public ReactNativeHost getReactNativeHost() {
-    if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
-      return mNewArchitectureNativeHost;
-    } else {
-      return mReactNativeHost;
-    }
+    return mReactNativeHost;
   }
 
   @Override
   public void onCreate() {
     super.onCreate();
-    // If you opted-in for the New Architecture, we enable the TurboModule system
-    ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     SoLoader.init(this, /* native exopackage */ false);
 
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
@@ -88,7 +87,7 @@ public class MainApplication extends Application implements ReactApplication {
          We use reflection here to pick up the class that initializes Flipper,
         since Flipper library is not available in release mode
         */
-        Class<?> aClass = Class.forName("com.mobile.ReactNativeFlipper");
+        Class<?> aClass = Class.forName("com.rentx.ReactNativeFlipper");
         aClass
             .getMethod("initializeFlipper", Context.class, ReactInstanceManager.class)
             .invoke(null, context, reactInstanceManager);
